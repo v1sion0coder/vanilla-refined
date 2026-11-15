@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "vanillarefined",
+  "version": "${version}",
+  "name": "Vanilla Refined",
+  "description": "Minecraft, just nicer. Living particles, ambient sounds, double doors, right-click harvest, animals that eat dropped food, a polished HUD and a better death screen, all while staying vanilla.",
+  "authors": ["v1sion"],
+  "contact": {"homepage": "https://v1sion0coder.github.io/vanilla-refined/"},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/vanillarefined/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.v1sion.vanillarefined.VanillaRefined"],
+    "client": ["dev.v1sion.vanillarefined.client.VanillaRefinedClient"]
+  },
+  "depends": {"fabricloader": ">=0.19.0", "minecraft": ">=26.2", "java": ">=25", "fabric-api": "*"}
+}

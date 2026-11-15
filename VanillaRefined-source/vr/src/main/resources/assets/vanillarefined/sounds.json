@@ -1,0 +1,9 @@
+{
+  "ambient.crickets": {"sounds": [{"name":"vanillarefined:cricket1","stream":false},{"name":"vanillarefined:cricket2"},{"name":"vanillarefined:cricket3"}], "subtitle": "subtitles.vanillarefined.crickets"},
+  "ambient.birds": {"sounds": ["vanillarefined:bird1","vanillarefined:bird2","vanillarefined:bird3"], "subtitle": "subtitles.vanillarefined.birds"},
+  "ambient.wind": {"sounds": [{"name":"vanillarefined:wind1","stream":true},{"name":"vanillarefined:wind2","stream":true}], "subtitle": "subtitles.vanillarefined.wind"},
+  "ambient.cave_drip": {"sounds": ["vanillarefined:drip1","vanillarefined:drip2","vanillarefined:drip3"], "subtitle": "subtitles.vanillarefined.drip"},
+  "block.ladder_creak": {"sounds": ["vanillarefined:creak1","vanillarefined:creak2"], "subtitle": "subtitles.vanillarefined.creak"},
+  "player.wet_step": {"sounds": ["vanillarefined:wet1","vanillarefined:wet2","vanillarefined:wet3"], "subtitle": "subtitles.vanillarefined.wet_step"},
+  "ui.sparkle": {"sounds": ["vanillarefined:sparkle"]}
+}
