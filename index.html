@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vanilla Refined: Minecraft, just nicer</title>
-<meta name="description" content="Vanilla Refined by v1sion: living particles, ambient sounds, double doors, right-click harvest, a polished HUD and a better death screen. Still feels 100% vanilla. Fabric 26.2+.">
+<meta name="description" content="Vanilla Refined by v1sion: living particles, double doors, right-click harvest, a polished HUD and a better death screen. Still feels 100% vanilla. Fabric 26.2+.">
 <meta property="og:title" content="Vanilla Refined: Minecraft, just nicer">
 <meta property="og:image" content="ingame.jpg">
 <meta name="theme-color" content="#0f1a10">
@@ -164,6 +164,49 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* Refined+ (gold) */
+.navr{display:flex;gap:10px;align-items:center}
+.navplus{position:relative;padding:9px 16px;border-radius:11px;font-weight:800;font-size:14px;color:#2a1a00;background:linear-gradient(135deg,#ffe08a,#ffc857 45%,#e89b2c);box-shadow:0 0 0 1px rgba(255,220,130,.5),0 8px 26px -8px rgba(255,190,70,.9);overflow:hidden}
+.navplus:after,.btn.gold:after,.plusbtn:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.65),transparent 70%);transform:translateX(-100%);animation:sweep 3s ease-in-out infinite}
+.btn.gold{color:#2a1a00;background:linear-gradient(135deg,#ffe9a8,#ffc857 45%,#e2902a);box-shadow:0 14px 40px -12px rgba(255,190,70,.9),0 0 0 1px rgba(255,225,140,.6) inset}
+.soon{font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:rgba(42,26,0,.85);color:#ffd877}
+#plus{position:relative;overflow:hidden;background:radial-gradient(900px 500px at 50% 0%,rgba(255,200,87,.16),transparent 70%),linear-gradient(#0d140e,#16120a 40%,#0d140e)}
+#plus:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,215,120,.5) 1px,transparent 1.5px);background-size:46px 46px;opacity:.12;mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
+.pluslogo{display:inline-flex;align-items:center;gap:12px;font-size:clamp(38px,6vw,68px);font-weight:900;letter-spacing:-2px;line-height:1.05}
+.goldtxt{background:linear-gradient(100deg,#b8741a 0%,#ffd36b 25%,#fff6d6 45%,#ffc857 60%,#b8741a 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+.csbadge{display:flex;width:fit-content;margin-left:auto;margin-right:auto;align-items:center;gap:8px;padding:7px 15px;border-radius:99px;border:1px solid rgba(255,200,87,.45);background:rgba(255,200,87,.08);color:#ffd877;font-weight:800;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px}
+.csbadge i{width:8px;height:8px;border-radius:50%;background:#ffc857;box-shadow:0 0 12px #ffc857;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.3;transform:scale(.7)}}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:46px}
+.pcard{position:relative;padding:26px;border-radius:20px;background:linear-gradient(160deg,rgba(255,200,87,.09),rgba(20,16,8,.75) 55%);border:1px solid rgba(255,200,87,.2);overflow:hidden;transition:transform .35s,border-color .35s,box-shadow .35s}
+.pcard:hover{transform:translateY(-6px);border-color:rgba(255,200,87,.55);box-shadow:0 22px 50px -20px rgba(255,180,60,.55)}
+.pcard:before{content:"";position:absolute;inset:-1px;background:linear-gradient(115deg,transparent 40%,rgba(255,230,160,.18) 50%,transparent 60%);transform:translateX(-120%);transition:transform .9s}
+.pcard:hover:before{transform:translateX(120%)}
+.pcard .pico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;background:linear-gradient(135deg,rgba(255,200,87,.25),rgba(255,159,67,.1));border:1px solid rgba(255,200,87,.3);margin-bottom:14px}
+.pcard h3{font-size:19px;margin-bottom:6px;color:#fff3d0}
+.pcard p{color:#c9bc9c;font-size:14.5px;margin-bottom:12px}
+.pcard ul{list-style:none;display:grid;gap:7px}
+.pcard li{font-size:14px;color:#e8dcc0;padding-left:22px;position:relative}
+.pcard li:before{content:"✦";position:absolute;left:0;color:#ffc857;font-size:12px;top:2px}
+.pcard .lock{position:absolute;top:18px;right:18px;font-size:11px;font-weight:800;letter-spacing:1px;color:#ffd877;opacity:.75}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:64px auto 0;max-width:920px;position:relative}
+.road:before{content:"";position:absolute;top:27px;left:16%;right:16%;height:3px;border-radius:3px;background:linear-gradient(90deg,#7cc950,#ffc857 50%,#e89b2c)}
+.road:after{content:"";position:absolute;top:24px;left:16%;width:12px;height:9px;border-radius:9px;background:#fff;box-shadow:0 0 14px #ffe08a;animation:travel 4s ease-in-out infinite}
+@keyframes travel{to{left:calc(84% - 12px)}}
+.rstep{text-align:center;padding:0 14px;position:relative}
+.rdot{width:56px;height:56px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:15px;position:relative;z-index:1;background:#16120a;border:3px solid #ffc857;color:#ffd877}
+.rstep:first-child .rdot{border-color:#7cc950;color:#a6e36b}
+.rstep:last-child .rdot{background:linear-gradient(135deg,#ffe08a,#e89b2c);color:#2a1a00;border-color:#fff1c4;box-shadow:0 0 30px rgba(255,190,70,.7)}
+.rstep h4{font-size:18px;color:#fff3d0}
+.rstep p{font-size:14px;color:#bfb293;margin-top:4px}
+.price{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.price.free{background:rgba(124,201,80,.15);color:#a6e36b;border:1px solid rgba(124,201,80,.4)}
+.price.paid{background:linear-gradient(135deg,#ffe08a,#e89b2c);color:#2a1a00}
+.pluscta{margin-top:56px;text-align:center}
+.plusbtn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:17px 34px;border-radius:16px;font-weight:900;font-size:17px;color:#2a1a00;background:linear-gradient(135deg,#ffe9a8,#ffc857 45%,#e2902a);box-shadow:0 18px 50px -14px rgba(255,190,70,.95);overflow:hidden;cursor:not-allowed;border:0;font-family:inherit}
+.plusnote{margin-top:14px;color:#a8997a;font-size:14px}
+@media(max-width:760px){.road{grid-template-columns:1fr;gap:26px}.road:before,.road:after{display:none}.navplus{display:none}}
 </style>
 </head>
 <body>
@@ -173,7 +216,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <nav><div class="wrap">
   <a class="brand" href="#top"><img class="px" src="icon.png" alt="">Vanilla Refined</a>
   <ul class="links"><li><a href="#features">Features</a></li><li><a href="#demos">Try it</a></li><li><a href="#controls">Controls</a></li><li><a href="#faq">FAQ</a></li></ul>
-  <a class="navcta" href="#download">Download</a>
+  <div class="navr"><a class="navplus" href="#plus">✦ Refined+</a><a class="navcta" href="#download">Download</a></div>
   <div id="prog"></div>
 </div></nav>
 
@@ -181,8 +224,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <header class="hero"><div class="wrap">
   <div class="pill reveal">Minecraft <b>26.2+</b> • Fabric <span>v1.0.0</span></div>
   <h1 class="reveal">Minecraft,<br><span class="shine">just nicer.</span></h1>
-  <p class="sub reveal">Living particles, real ambient sounds, double doors, right-click harvest, a polished HUD and a better death screen. Still feels 100% vanilla.</p>
-  <div class="btns reveal"><a class="btn main" href="#download">⬇ Download free</a><a class="btn alt" href="#demos">✦ Try the features</a></div>
+  <p class="sub reveal">Living particles, double doors, right-click harvest, a polished HUD and a better death screen. Still feels 100% vanilla.</p>
+  <div class="btns reveal"><a class="btn main" href="#download">⬇ Download free</a><a class="btn gold" href="#plus">✦ Refined+ <span class="soon">Coming soon</span></a><a class="btn alt" href="#demos">▶ Try the features</a></div>
   <div class="shot reveal"><div class="tilt" id="tilt">
     <img src="ingame.jpg" alt="Vanilla Refined in game">
     <div class="glare"></div>
@@ -193,8 +236,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <p class="caption reveal">A real in-game screenshot with Vanilla Refined installed.</p>
   <div class="stats">
     <div class="stat reveal"><b data-count="17">0</b><span>refinements</span></div>
-    <div class="stat reveal"><b data-count="12">0</b><span>new ambient sounds</span></div>
-    <div class="stat reveal"><b data-count="20">0</b><span>config toggles</span></div>
+    <div class="stat reveal"><b data-count="100">0</b><span>% vanilla feel</span></div>
+    <div class="stat reveal"><b data-count="19">0</b><span>config toggles</span></div>
     <div class="stat reveal"><b data-count="0">0</b><span>new blocks or items</span></div>
   </div>
 </div></header>
@@ -203,7 +246,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="center"><span class="eyebrow reveal">Features</span><h2 class="reveal">Everything you already know, polished</h2>
   <p class="lead reveal">No new items, no new blocks, no weird mechanics. Just the game you love, with more life in it.</p></div>
   <div class="cats reveal" id="cats">
-    <button class="cat on" data-c="all">All</button><button class="cat" data-c="world">🌍 World</button><button class="cat" data-c="sound">🔊 Sound</button>
+    <button class="cat on" data-c="all">All</button><button class="cat" data-c="world">🌍 World</button>
     <button class="cat" data-c="farm">🌾 Farming</button><button class="cat" data-c="mobs">🐄 Mobs</button><button class="cat" data-c="hud">🖥 HUD</button>
   </div>
   <div class="grid" id="grid">
@@ -213,7 +256,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div class="card reveal" data-c="world"><div class="ico">🕯</div><h3>Flickering lights</h3><p>Torches, lanterns and candles flicker softly, and the flame leans away when you walk past.</p><span class="badge">World & blocks</span></div>
     <div class="card reveal" data-c="world"><div class="ico">🖼</div><h3>Item frames</h3><p>Rotating an item sparkles, and glow item frames pulse with a soft glow.</p><span class="badge">Items</span></div>
     <div class="card reveal" data-c="world"><div class="ico">❄</div><h3>Cold breath</h3><p>In snowy biomes every player breathes out little white clouds.</p><span class="badge">Player feel</span></div>
-    <div class="card reveal" data-c="sound"><div class="ico">🐦</div><h3>Ambient sounds</h3><p>Birds sing near trees by day, crickets chirp at night, wind howls up high and water drips with an echo in caves. All 12 sounds are new.</p><span class="badge">Sound</span></div>
+    <div class="card reveal" data-c="world"><div class="ico">💧</div><h3>Cave drips</h3><p>Deep underground, water drips from the ceiling here and there, so caves feel damp and alive.</p><span class="badge">World & blocks</span></div>
     <div class="card reveal" data-c="mobs"><div class="ico">👻</div><h3>Death effects</h3><p>When a mob dies, its soul drifts up while the body crumbles into dust.</p><span class="badge">Mobs</span></div>
     <div class="card reveal" data-c="mobs"><div class="ico">💬</div><h3>Villager emotes</h3><p>Villagers react to you: hearts when you hold emeralds, notes when they're happy, anger when they're hurt.</p><span class="badge">Mobs</span></div>
     <div class="card reveal" data-c="farm"><div class="ico">🌾</div><h3>Right-click harvest</h3><p>Right-click ripe crops to harvest and replant in one go. Works on wheat, carrots, potatoes, beetroot and nether wart.</p><span class="badge">Farming</span></div>
@@ -244,9 +287,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <div class="txt"><h3>📍 Info HUD & toasts</h3><p>Toggle the info panel with J. Notifications slide in from the corner.</p></div></div>
     <div class="demo reveal"><div class="stage death"><div class="dt">You Died!</div><div class="panel">You died at <b>-212 58 1104</b><br>in <b>Overworld</b> • level <span style="color:#5f5">27</span><br><span style="color:#777">Your items are waiting there</span></div><div class="copy" id="copy">📍 Copy death coordinates</div></div>
       <div class="txt"><h3>☠ Better death screen</h3><p>Never lose your stuff again.</p></div></div>
-    <div class="demo reveal" style="grid-column:1/-1"><div class="stage" style="height:180px;background:linear-gradient(90deg,#0f2316,#13261d,#1a1830)"><div class="wave" id="wave"></div>
-      <div class="sndbtns"><button data-s="birds" class="on">🐦 Birds</button><button data-s="crickets">🦗 Crickets</button><button data-s="wind">🌬 Wind</button><button data-s="drip">💧 Cave drips</button></div></div>
-      <div class="txt"><h3>🔊 New ambient sounds</h3><p>Click a sound to hear a preview, made in your browser like the sounds in the mod.</p></div></div>
   </div>
 </div></section>
 
@@ -261,15 +301,36 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <span class="k">"animatedContainers"</span>: <span class="v">true</span>,
   <span class="k">"doubleDoors"</span>: <span class="v">true</span>,
   <span class="k">"flickeringLights"</span>: <span class="v">true</span>,
-  <span class="k">"ambientSounds"</span>: <span class="v">true</span>,
-  <span class="k">"ambientVolume"</span>: <span class="v">0.6</span>,
+  <span class="k">"caveDrips"</span>: <span class="v">true</span>,
   <span class="k">"rightClickHarvest"</span>: <span class="v">true</span>,
   <span class="k">"animalsEatDroppedFood"</span>: <span class="v">true</span>,
   <span class="k">"hotbarPolish"</span>: <span class="v">true</span>,
   <span class="k">"infoHud"</span>: <span class="v">true</span>,
   <span class="k">"betterDeathScreen"</span>: <span class="v">true</span>,
-  <span class="k">"…"</span>: <span class="v">20 toggles in total</span>
+  <span class="k">"…"</span>: <span class="v">19 toggles in total</span>
 }</pre>
+</div></section>
+
+<section id="plus"><div class="wrap">
+  <div class="center">
+    <span class="csbadge reveal"><i></i>Coming soon</span>
+    <h2 class="pluslogo reveal"><span class="goldtxt">Vanilla Refined+</span></h2>
+    <p class="lead reveal">The next generation. Not just more features: a world that <b style="color:#ffd877">remembers you</b>, moves smoothly and reacts to what you do. Still 100% vanilla feel.</p>
+  </div>
+  <div class="pgrid">
+    <div class="pcard reveal"><span class="lock">✦ PLUS</span><div class="pico">👣</div><h3>The world remembers you</h3><p>Your world changes because you live in it.</p><ul><li>Grass wears into paths where you walk often</li><li>Doors, furnaces and stairs you use age naturally</li><li>Nature slowly reclaims places you abandon</li></ul></div>
+    <div class="pcard reveal"><span class="lock">✦ PLUS</span><div class="pico">🎞</div><h3>Real smooth animations</h3><p>Not particles: real movement.</p><ul><li>Chests, doors and trapdoors swing smoothly</li><li>Item frames truly rotate, hoppers pull items in</li><li>Mobs fall and fade out, items fly into your inventory</li></ul></div>
+    <div class="pcard reveal"><span class="lock">✦ PLUS</span><div class="pico">⛈</div><h3>Weather & seasons</h3><p>The sky finally matters.</p><ul><li>Rain leaves puddles, helps crops and puts out fire</li><li>Animals run for shelter in storms</li><li>Snow piles up and melts, leaves change color with the seasons</li></ul></div>
+    <div class="pcard reveal"><span class="lock">✦ PLUS</span><div class="pico">🐺</div><h3>Mobs with personality</h3><p>They know who you are.</p><ul><li>Villagers greet friends and avoid bullies</li><li>Animals follow the player who feeds them</li><li>Pets react when you're hurt, golems give kids flowers</li></ul></div>
+    <div class="pcard reveal"><span class="lock">✦ PLUS</span><div class="pico">📖</div><h3>World journal</h3><p>Every world tells its own story.</p><ul><li>First diamond, first Nether trip, every death</li><li>Your biggest build days and adventures</li><li>A readable in-game book, written in vanilla style</li></ul></div>
+    <div class="pcard reveal"><span class="lock">✦ PLUS</span><div class="pico">✨</div><h3>Everything from Refined</h3><p>All the free features come along.</p><ul><li>Particles, double doors, farming and HUD polish</li><li>Better death screen and smart toasts</li><li>One config, fully customizable</li></ul></div>
+  </div>
+  <div class="road reveal">
+    <div class="rstep"><div class="rdot">α</div><h4>Alpha</h4><p>First playable build. Help test it and shape it.</p><span class="price free">Free</span></div>
+    <div class="rstep"><div class="rdot">β</div><h4>Beta</h4><p>All features in, polishing and fixing.</p><span class="price free">Free</span></div>
+    <div class="rstep"><div class="rdot">V1</div><h4>Version 1</h4><p>The first full generation of Refined+.</p><span class="price paid">Paid</span></div>
+  </div>
+  <div class="pluscta reveal"><button class="plusbtn" disabled>✦ Refined+ is coming soon</button><p class="plusnote">Free during Alpha and Beta. Paid from Version 1. Vanilla Refined stays free forever.</p></div>
 </div></section>
 
 <section id="download"><div class="wrap"><div class="dlbox reveal">
@@ -288,10 +349,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="center"><span class="eyebrow reveal">FAQ</span><h2 class="reveal">Questions</h2></div>
   <div class="faq">
     <details class="reveal"><summary>Does it add new blocks or items?</summary><p>No. Vanilla Refined only polishes what's already in the game, so worlds stay 100% vanilla-compatible.</p></details>
-    <details class="reveal"><summary>Does it work on servers?</summary><p>Yes. Visuals, sounds and the HUD work for you anywhere. Gameplay features like double doors, right-click harvest and animals eating dropped food need the mod on the server too (in singleplayer and LAN that's automatic).</p></details>
+    <details class="reveal"><summary>Does it work on servers?</summary><p>Yes. Visuals and the HUD work for you anywhere. Gameplay features like double doors, right-click harvest and animals eating dropped food need the mod on the server too (in singleplayer and LAN that's automatic).</p></details>
     <details class="reveal"><summary>Will it slow my game down?</summary><p>No. The effects reuse Minecraft's own particles and only run near you. You can turn anything off in the config.</p></details>
     <details class="reveal"><summary>Is there a Forge version?</summary><p>Not yet. Version 1.0 is Fabric only.</p></details>
-    <details class="reveal"><summary>What's Vanilla Refined+?</summary><p>A bigger follow-up with even more polish. It's coming later. Vanilla Refined stays the light, pure-vanilla one.</p></details>
+    <details class="reveal"><summary>What's Vanilla Refined+?</summary><p>The next generation: a world that remembers you, real smooth animations, living weather and seasons, mobs with personality and a world journal. It's coming soon. Alpha and Beta are free, and from Version 1 it becomes paid. Vanilla Refined stays free forever.</p></details>
   </div>
 </div></section>
 </main>
@@ -379,23 +440,6 @@ document.getElementById('doorStage').addEventListener('click', () => document.ge
 })();
 /* death copy */
 document.getElementById('copy').addEventListener('click', e => { navigator.clipboard?.writeText('-212 58 1104'); e.target.textContent = '✔ Copied -212 58 1104'; setTimeout(() => e.target.textContent = '📍 Copy death coordinates', 1800); });
-/* sound previews (web audio, synthesized the same way as the mod's sounds) */
-(() => {
-  const wave = document.getElementById('wave'); for (let i = 0; i < 48; i++) { const b = document.createElement('i'); b.style.height = 10 + Math.random() * 50 + 'px'; b.style.animationDelay = -Math.random() + 's'; b.style.animationPlayState = 'paused'; wave.appendChild(b); }
-  let ctx;
-  const play = kind => {
-    ctx ??= new (window.AudioContext || window.webkitAudioContext)(); const t = ctx.currentTime, out = ctx.createGain(); out.gain.value = .25; out.connect(ctx.destination);
-    const tone = (f0, f1, start, dur, type = 'sine', vol = .5) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t + start); o.frequency.exponentialRampToValueAtTime(f1, t + start + dur); g.gain.setValueAtTime(0, t + start); g.gain.linearRampToValueAtTime(vol, t + start + .01); g.gain.exponentialRampToValueAtTime(.001, t + start + dur); o.connect(g); g.connect(out); o.start(t + start); o.stop(t + start + dur + .05); };
-    const noise = (dur, lp, hp, vol = .6) => { const b = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; const s = ctx.createBufferSource(); s.buffer = b; const f1 = ctx.createBiquadFilter(); f1.type = 'lowpass'; f1.frequency.value = lp; const f2 = ctx.createBiquadFilter(); f2.type = 'highpass'; f2.frequency.value = hp; const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + dur * .3); g.gain.linearRampToValueAtTime(0, t + dur); s.connect(f1); f1.connect(f2); f2.connect(g); g.connect(out); s.start(t); };
-    if (kind === 'birds') for (let i = 0; i < 6; i++) tone(2600 + Math.random() * 900, 4000 + Math.random() * 600, i * .16 + (i > 2 ? .5 : 0), .08);
-    if (kind === 'crickets') for (let i = 0; i < 18; i++) tone(4500, 4500, (i % 3) * .04 + (i / 3 | 0) * .45, .03, 'sine', .25);
-    if (kind === 'wind') noise(3, 600, 80, .9);
-    if (kind === 'drip') { tone(1800, 900, 0, .12); tone(1800, 900, .2, .12, 'sine', .2); tone(1800, 900, .45, .12, 'sine', .08); }
-    wave.querySelectorAll('i').forEach(b => b.style.animationPlayState = 'running');
-    setTimeout(() => wave.querySelectorAll('i').forEach(b => b.style.animationPlayState = 'paused'), 2500);
-  };
-  document.querySelectorAll('.sndbtns button').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('.sndbtns button').forEach(x => x.classList.toggle('on', x === b)); play(b.dataset.s); }));
-})();
 </script>
 </body>
 </html>
