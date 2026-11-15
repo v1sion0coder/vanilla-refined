@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vanilla Refined: Minecraft, just nicer</title>
+<meta name="description" content="Vanilla Refined by v1sion: living particles, ambient sounds, double doors, right-click harvest, a polished HUD and a better death screen. Still feels 100% vanilla. Fabric 26.2+.">
+<meta property="og:title" content="Vanilla Refined: Minecraft, just nicer">
+<meta property="og:image" content="ingame.jpg">
+<meta name="theme-color" content="#0f1a10">
+<link rel="icon" href="icon.png">
+<style>
+:root{--bg:#0d140e;--bg2:#13201a;--panel:rgba(22,34,24,.78);--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.15);--text:#f2f5ec;--mute:#a7b5a0;--grass:#7cc950;--grass2:#a6e36b;--gold:#ffc857;--amber:#ff9f43;--sky:#7fc8ff;--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.px{image-rendering:pixelated}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative}
+::selection{background:var(--grass);color:#0d140e}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(0,0,0,.35);padding:2px 7px;border-radius:6px;font-size:.92em;color:var(--grass2)}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 500px at 15% -10%,rgba(124,201,80,.22),transparent 60%),radial-gradient(800px 500px at 100% 20%,rgba(255,200,87,.13),transparent 60%),radial-gradient(900px 600px at 50% 120%,rgba(127,200,255,.10),transparent 60%)}
+main,nav,footer{position:relative;z-index:2}
+
+nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(16px) saturate(1.3);background:rgba(13,20,14,.65);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px}
+.brand img{width:36px;height:36px;border-radius:8px;box-shadow:0 6px 20px -6px var(--grass)}
+.links{display:flex;gap:4px;list-style:none}
+.links a{padding:8px 13px;border-radius:10px;color:var(--mute);font-size:15px;font-weight:500;transition:.2s}
+.links a:hover,.links a.on{color:var(--text);background:rgba(255,255,255,.06)}
+.navcta{padding:9px 18px;border-radius:11px;background:linear-gradient(135deg,var(--grass),#5aa83a);color:#0d140e;font-weight:800;font-size:14px}
+#prog{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--grass),var(--gold))}
+@media(max-width:900px){.links{display:none}}
+
+.hero{padding:90px 0 40px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:7px 8px 7px 16px;border:1px solid var(--line2);border-radius:99px;font-size:13.5px;color:var(--mute);background:rgba(255,255,255,.03);margin-bottom:26px}
+.pill b{color:var(--text)}.pill span{padding:3px 10px;border-radius:99px;background:rgba(124,201,80,.16);color:var(--grass2);font-weight:700}
+h1{font-size:clamp(46px,8vw,96px);line-height:.98;font-weight:900;letter-spacing:-2.5px}
+.shine{background:linear-gradient(100deg,var(--grass) 0%,var(--gold) 35%,#fff 48%,var(--gold) 62%,var(--grass) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite}
+@keyframes shine{to{background-position:-250% 0}}
+.sub{max-width:640px;margin:24px auto 34px;color:var(--mute);font-size:clamp(17px,2vw,20px)}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:14px;font-weight:800;font-size:16px;transition:transform .2s;overflow:hidden}
+.btn:hover{transform:translateY(-3px)}
+.btn.main{background:linear-gradient(135deg,var(--grass),#5aa83a);color:#0d140e;box-shadow:0 14px 40px -12px rgba(124,201,80,.8)}
+.btn.main:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5),transparent 70%);transform:translateX(-100%);animation:sweep 3.5s ease-in-out infinite}
+@keyframes sweep{60%,100%{transform:translateX(100%)}}
+.btn.alt{border:1px solid var(--line2);background:rgba(255,255,255,.04)}
+.shot{margin:64px auto 0;max-width:1040px;perspective:1400px}
+.tilt{position:relative;transform-style:preserve-3d;transition:transform .25s ease-out;border-radius:22px}
+.tilt img{width:100%;border-radius:22px;border:1px solid var(--line2);box-shadow:0 60px 120px -40px rgba(124,201,80,.4)}
+.tilt .glare{position:absolute;inset:0;border-radius:22px;background:radial-gradient(600px circle at var(--gx,50%) var(--gy,30%),rgba(255,255,255,.14),transparent 45%);pointer-events:none}
+.tag{position:absolute;padding:9px 13px;border-radius:12px;background:rgba(13,20,14,.88);border:1px solid var(--line2);font-size:13.5px;font-weight:700;transform:translateZ(50px);box-shadow:0 20px 40px -20px #000;white-space:nowrap}
+.tag small{display:block;color:var(--mute);font-weight:500;font-size:12px}
+.t1{top:30%;left:-3%;animation:bob 5s ease-in-out infinite}.t2{top:10%;right:-4%;animation:bob 6s ease-in-out infinite -2s}.t3{bottom:12%;right:6%;animation:bob 5.5s ease-in-out infinite -3s}
+@keyframes bob{50%{translate:0 -10px}}
+.caption{color:var(--mute);font-size:14px;margin-top:12px}
+@media(max-width:760px){.tag{display:none}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:880px;margin:56px auto 0}
+.stat{padding:22px 10px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);text-align:center}
+.stat b{display:block;font-size:38px;font-weight:900;background:linear-gradient(180deg,#fff,var(--grass2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{color:var(--mute);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+section{padding:105px 0}
+.eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--grass2);margin-bottom:14px}
+h2{font-size:clamp(34px,4.6vw,54px);font-weight:900;letter-spacing:-1.2px;line-height:1.05;margin-bottom:16px}
+.lead{color:var(--mute);max-width:640px;margin-bottom:50px;font-size:18px}
+.center{text-align:center}.center .lead{margin-left:auto;margin-right:auto}
+
+.cats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
+.cat{padding:9px 16px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--mute);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:.2s}
+.cat.on{background:var(--text);color:var(--bg)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;overflow:hidden;transition:transform .3s,border-color .3s,opacity .3s}
+.card:before{content:"";position:absolute;inset:0;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(124,201,80,.14),transparent 40%);opacity:0;transition:opacity .3s}
+.card:hover{transform:translateY(-4px);border-color:var(--line2)}.card:hover:before{opacity:1}
+.card>*{position:relative}
+.card.hide{display:none}
+.ico{width:48px;height:48px;display:grid;place-items:center;border-radius:13px;margin-bottom:14px;background:linear-gradient(135deg,rgba(124,201,80,.2),rgba(255,200,87,.14));border:1px solid var(--line2);font-size:24px}
+.card h3{font-size:18px;margin-bottom:6px}
+.card p{color:var(--mute);font-size:15px}
+.badge{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.06);color:var(--mute)}
+
+/* demos */
+.demos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:980px){.demos{grid-template-columns:1fr 1fr}}@media(max-width:640px){.demos{grid-template-columns:1fr}}
+.demo{border-radius:20px;border:1px solid var(--line2);overflow:hidden;background:var(--panel)}
+.stage{height:210px;position:relative;overflow:hidden;background:linear-gradient(#0b1530,#1b2a3f 60%,#2c4a24 60%,#23401c)}
+.demo .txt{padding:16px 18px}.demo h3{font-size:17px;margin-bottom:4px}.demo p{color:var(--mute);font-size:14px}
+/* torch */
+.torch{position:absolute;left:50%;bottom:62px;width:10px;height:44px;margin-left:-5px;background:linear-gradient(90deg,#6b4a2b,#8a6438);box-shadow:inset 0 6px 0 #3b2817}
+.flame{position:absolute;left:50%;bottom:104px;width:16px;height:22px;margin-left:-8px;background:radial-gradient(circle at 50% 70%,#fff6c2,#ffc857 40%,#ff7a1a 70%,transparent 72%);border-radius:50% 50% 40% 40%;filter:blur(.3px);animation:flick 1.2s infinite ease-in-out;transform-origin:50% 100%}
+@keyframes flick{0%,100%{transform:scale(1) skewX(0)}25%{transform:scale(1.08,.94) skewX(-6deg)}50%{transform:scale(.94,1.08) skewX(4deg)}75%{transform:scale(1.04,.97) skewX(-3deg)}}
+.halo{position:absolute;left:50%;bottom:70px;width:180px;height:180px;margin-left:-90px;border-radius:50%;background:radial-gradient(rgba(255,200,87,.35),transparent 65%);animation:halo 2.4s infinite ease-in-out}
+@keyframes halo{50%{opacity:.7;transform:scale(.94)}}
+.lean .flame{animation:none;transform:skewX(-22deg) scale(1.05,.9)}
+/* wheat */
+.wheat{position:absolute;bottom:58px;width:14px;height:46px;background:linear-gradient(#e7c565,#b8902f);clip-path:polygon(50% 0,100% 30%,70% 100%,30% 100%,0 30%);transform-origin:50% 100%;animation:sway 3s infinite ease-in-out}
+@keyframes sway{50%{transform:rotate(4deg)}}
+.spark{position:absolute;width:4px;height:4px;background:#fff6a8;box-shadow:0 0 8px #ffe066;animation:rise 1.6s linear forwards}
+@keyframes rise{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-34px)}}
+/* hotbar */
+.hb{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;gap:2px;padding:3px;background:rgba(0,0,0,.45);border:2px solid #111}
+.hb span{width:30px;height:30px;box-shadow:inset 0 0 0 2px #666;display:grid;place-items:center;font-size:15px}
+.glow{position:absolute;bottom:25px;width:34px;height:34px;border:2px solid #ffe9a8;box-shadow:0 0 14px rgba(255,233,168,.7),inset 0 0 12px rgba(255,242,192,.35);transition:left .18s cubic-bezier(.3,.8,.3,1);animation:gp 1.6s infinite ease-in-out}
+@keyframes gp{50%{box-shadow:0 0 6px rgba(255,233,168,.4),inset 0 0 6px rgba(255,242,192,.2)}}
+.keys{position:absolute;top:14px;left:0;right:0;text-align:center;color:var(--mute);font-size:12.5px}
+/* toast */
+.toast{position:absolute;right:14px;bottom:38px;width:230px;padding:9px 12px 9px 34px;background:rgba(21,16,31,.85);border-left:3px solid #ff5a5a;font:12px/1.35 ui-monospace,Menlo,monospace;color:#fff;transform:translateX(120%);transition:transform .35s cubic-bezier(.2,.9,.3,1)}
+.toast.show{transform:none}.toast i{position:absolute;left:11px;top:13px;font-style:normal;color:#ff5a5a}.toast small{color:#aaa}
+/* info hud */
+.info{position:absolute;left:12px;top:12px;padding:6px 10px 6px 12px;background:rgba(0,0,0,.55);border-left:2px solid var(--gold);font:12px/1.55 ui-monospace,Menlo,monospace;color:#fff;transition:transform .35s,opacity .35s}
+.info.off{transform:translateX(-110%);opacity:0}
+.info b{color:#fff;font-weight:400}.info span{color:#aaa}
+/* door */
+.doors{position:absolute;left:50%;bottom:58px;transform:translateX(-50%);display:flex;perspective:400px}
+.door{width:40px;height:78px;background:linear-gradient(#a9824e,#7d5b33);border:3px solid #5b3f20;transition:transform .45s cubic-bezier(.3,.8,.3,1)}
+.door:first-child{transform-origin:0 50%}.door:last-child{transform-origin:100% 50%}
+.open .door:first-child{transform:rotateY(-75deg)}.open .door:last-child{transform:rotateY(75deg)}
+/* death */
+.death{background:linear-gradient(rgba(120,0,0,.55),rgba(40,0,0,.75))}
+.death .dt{position:absolute;top:28px;left:0;right:0;text-align:center;font:900 26px system-ui;color:#fff;text-shadow:3px 3px 0 #3f0000}
+.death .panel{position:absolute;left:50%;top:84px;transform:translateX(-50%);width:84%;padding:8px;background:rgba(0,0,0,.55);border-top:1px solid #ff5a5a;font:12px/1.6 ui-monospace,Menlo,monospace;color:#ccc;text-align:center}
+.death .panel b{color:#fff;font-weight:400}
+.death .copy{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:84%;padding:6px;background:#6f6f6f;border:2px solid #222;box-shadow:inset 0 2px 0 #9b9b9b;color:#fff;font:12px ui-monospace,monospace;text-align:center;cursor:pointer}
+/* sound */
+.wave{position:absolute;left:0;right:0;top:50%;height:60px;margin-top:-30px;display:flex;align-items:center;justify-content:center;gap:3px}
+.wave i{width:4px;border-radius:3px;background:var(--grass2);animation:wv 1s infinite ease-in-out}
+@keyframes wv{50%{transform:scaleY(.25)}}
+.sndbtns{position:absolute;bottom:14px;left:0;right:0;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.sndbtns button{padding:6px 10px;border-radius:9px;border:1px solid var(--line2);background:rgba(0,0,0,.4);color:var(--text);font:600 12px inherit;font-family:inherit;cursor:pointer}
+.sndbtns button.on{background:var(--grass);color:#0d140e}
+
+.cfg{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}
+@media(max-width:860px){.cfg{grid-template-columns:1fr}}
+pre{background:#0a110b;border:1px solid var(--line2);border-radius:18px;padding:20px;overflow:auto;font:13px/1.6 ui-monospace,Menlo,monospace;color:#cfe8c0}
+pre .k{color:var(--grass2)}pre .v{color:var(--gold)}
+.keyrow{display:flex;gap:12px;align-items:center;margin:12px 0;color:var(--mute)}
+.kbd{min-width:42px;padding:8px 10px;border-radius:9px;background:#1c2b1e;border:1px solid var(--line2);border-bottom-width:3px;text-align:center;font-weight:800;color:var(--text)}
+
+.dlbox{position:relative;border-radius:28px;padding:56px 36px;text-align:center;background:linear-gradient(135deg,rgba(124,201,80,.16),rgba(255,200,87,.1));border:1px solid var(--line2)}
+.ver{display:inline-block;padding:5px 12px;border-radius:99px;background:rgba(0,0,0,.3);font-size:13px;color:var(--gold);font-weight:800;margin-bottom:16px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:860px;margin:30px auto 0;text-align:left}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{padding:18px;border-radius:16px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
+.step b{display:block;color:var(--grass2);font-size:13px;margin-bottom:4px}
+.step p{color:var(--mute);font-size:14.5px}
+.faq{max-width:820px;margin:0 auto;display:grid;gap:10px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:0 22px}
+details[open]{border-color:var(--line2)}
+summary{list-style:none;cursor:pointer;padding:19px 0;font-weight:800;font-size:17px;display:flex;justify-content:space-between}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--grass2);font-size:22px;transition:transform .25s}
+details[open] summary:after{transform:rotate(45deg)}
+details p{color:var(--mute);padding-bottom:18px}
+footer{padding:46px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bgglow"></div>
+<canvas id="fx"></canvas>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><img class="px" src="icon.png" alt="">Vanilla Refined</a>
+  <ul class="links"><li><a href="#features">Features</a></li><li><a href="#demos">Try it</a></li><li><a href="#controls">Controls</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a class="navcta" href="#download">Download</a>
+  <div id="prog"></div>
+</div></nav>
+
+<main id="top">
+<header class="hero"><div class="wrap">
+  <div class="pill reveal">Minecraft <b>26.2+</b> • Fabric <span>v1.0.0</span></div>
+  <h1 class="reveal">Minecraft,<br><span class="shine">just nicer.</span></h1>
+  <p class="sub reveal">Living particles, real ambient sounds, double doors, right-click harvest, a polished HUD and a better death screen. Still feels 100% vanilla.</p>
+  <div class="btns reveal"><a class="btn main" href="#download">⬇ Download free</a><a class="btn alt" href="#demos">✦ Try the features</a></div>
+  <div class="shot reveal"><div class="tilt" id="tilt">
+    <img src="ingame.jpg" alt="Vanilla Refined in game">
+    <div class="glare"></div>
+    <div class="tag t1">🔥 Busy furnace fire<small>animated containers</small></div>
+    <div class="tag t2">📍 Info HUD<small>press J to toggle</small></div>
+    <div class="tag t3">✨ Golden hotbar glow<small>slides between slots</small></div>
+  </div></div>
+  <p class="caption reveal">A real in-game screenshot with Vanilla Refined installed.</p>
+  <div class="stats">
+    <div class="stat reveal"><b data-count="20">0</b><span>refinements</span></div>
+    <div class="stat reveal"><b data-count="17">0</b><span>new ambient sounds</span></div>
+    <div class="stat reveal"><b data-count="22">0</b><span>config toggles</span></div>
+    <div class="stat reveal"><b data-count="0">0</b><span>new blocks or items</span></div>
+  </div>
+</div></header>
+
+<section id="features"><div class="wrap">
+  <div class="center"><span class="eyebrow reveal">Features</span><h2 class="reveal">Everything you already know, polished</h2>
+  <p class="lead reveal">No new items, no new blocks, no weird mechanics. Just the game you love, with more life in it.</p></div>
+  <div class="cats reveal" id="cats">
+    <button class="cat on" data-c="all">All</button><button class="cat" data-c="world">🌍 World</button><button class="cat" data-c="sound">🔊 Sound</button>
+    <button class="cat" data-c="farm">🌾 Farming</button><button class="cat" data-c="mobs">🐄 Mobs</button><button class="cat" data-c="hud">🖥 HUD</button>
+  </div>
+  <div class="grid" id="grid">
+    <div class="card reveal" data-c="world"><div class="ico">🔥</div><h3>Animated containers</h3><p>Furnaces burn with a busy fire while smelting, brewing stands bubble, hoppers glint as items pass and lecterns lift glowing letters off their pages.</p><span class="badge">World & blocks</span></div>
+    <div class="card reveal" data-c="world"><div class="ico">🚪</div><h3>Double doors</h3><p>Open one side of a double door and the other opens with it. Sneak to open just one. Iron doors still need redstone.</p><span class="badge">World & blocks</span></div>
+    <div class="card reveal" data-c="world"><div class="ico">⏳</div><h3>Falling block dust</h3><p>Sand and gravel leave a dust trail as they drop and burst into a puff of block dust when they land.</p><span class="badge">World & blocks</span></div>
+    <div class="card reveal" data-c="world"><div class="ico">🕯</div><h3>Flickering lights</h3><p>Torches, lanterns and candles flicker softly, and the flame leans away when you walk past.</p><span class="badge">World & blocks</span></div>
+    <div class="card reveal" data-c="world"><div class="ico">🖼</div><h3>Item frames</h3><p>Rotating an item sparkles, and glow item frames pulse with a soft glow.</p><span class="badge">Items</span></div>
+    <div class="card reveal" data-c="world"><div class="ico">❄</div><h3>Cold breath</h3><p>In snowy biomes every player breathes out little white clouds.</p><span class="badge">Player feel</span></div>
+    <div class="card reveal" data-c="sound"><div class="ico">🪜</div><h3>Ladder creak</h3><p>Ladders creak gently under you as you climb.</p><span class="badge">Player feel</span></div>
+    <div class="card reveal" data-c="sound"><div class="ico">🐦</div><h3>Ambient sounds</h3><p>Birds sing near trees by day, crickets chirp at night, wind howls up high and water drips with an echo in caves. All 17 sounds are new.</p><span class="badge">Sound</span></div>
+    <div class="card reveal" data-c="sound"><div class="ico">💧</div><h3>Wet footsteps</h3><p>After a swim you leave splashy, dripping footsteps for a while, for every player.</p><span class="badge">Sound</span></div>
+    <div class="card reveal" data-c="mobs"><div class="ico">👻</div><h3>Death effects</h3><p>When a mob dies, its soul drifts up while the body crumbles into dust.</p><span class="badge">Mobs</span></div>
+    <div class="card reveal" data-c="mobs"><div class="ico">💬</div><h3>Villager emotes</h3><p>Villagers react to you: hearts when you hold emeralds, notes when they're happy, anger when they're hurt.</p><span class="badge">Mobs</span></div>
+    <div class="card reveal" data-c="farm"><div class="ico">🌾</div><h3>Right-click harvest</h3><p>Right-click ripe crops to harvest and replant in one go. Works on wheat, carrots, potatoes, beetroot and nether wart.</p><span class="badge">Farming</span></div>
+    <div class="card reveal" data-c="farm"><div class="ico">✨</div><h3>Growth sparkle & bone meal pop</h3><p>Fully grown crops sparkle so you can spot them, and bone meal goes off with a satisfying chime and burst.</p><span class="badge">Farming</span></div>
+    <div class="card reveal" data-c="farm"><div class="ico">🐑</div><h3>Animals eat dropped food</h3><p>Drop wheat, carrots or seeds and nearby animals walk over and eat it, heal up and fall in love. Sheep show off when their wool grows back.</p><span class="badge">Farming</span></div>
+    <div class="card reveal" data-c="hud"><div class="ico">🎯</div><h3>Hotbar polish</h3><p>A golden glow slides smoothly to your selected slot and pulses gently, and your offhand slot gets a matching frame.</p><span class="badge">HUD</span></div>
+    <div class="card reveal" data-c="hud"><div class="ico">📍</div><h3>Info HUD</h3><p>Coordinates, facing, biome, a day/night clock and FPS in a clean panel that slides in and out with <code>J</code>.</p><span class="badge">HUD</span></div>
+    <div class="card reveal" data-c="hud"><div class="ico">🛡</div><h3>Armor & tool durability</h3><p>Your armor and held tool sit next to the hotbar with green, yellow or red durability bars.</p><span class="badge">HUD</span></div>
+    <div class="card reveal" data-c="hud"><div class="ico">🔔</div><h3>Smart toasts</h3><p>Sliding notifications: "Pickaxe almost broken", "It's getting dark", "Inventory full".</p><span class="badge">HUD</span></div>
+    <div class="card reveal" data-c="hud"><div class="ico">☠</div><h3>Better death screen</h3><p>Shows exactly where you died, the dimension and your level, with a button to copy the coordinates.</p><span class="badge">Quality of life</span></div>
+  </div>
+</div></section>
+
+<section id="demos"><div class="wrap">
+  <div class="center"><span class="eyebrow reveal">Try it</span><h2 class="reveal">Play with the features</h2>
+  <p class="lead reveal">Little live demos of what changes in game. Click, hover and press keys.</p></div>
+  <div class="demos">
+    <div class="demo reveal"><div class="stage" id="torchStage"><div class="halo"></div><div class="torch"></div><div class="flame"></div><div class="keys">hover to walk past</div></div>
+      <div class="txt"><h3>🕯 Flickering lights</h3><p>Flames flicker and lean away as you pass.</p></div></div>
+    <div class="demo reveal"><div class="stage" id="wheatStage"><div class="keys">click a ripe crop to harvest</div></div>
+      <div class="txt"><h3>🌾 Sparkle & harvest</h3><p>Ripe crops sparkle. Right-click to harvest and replant.</p></div></div>
+    <div class="demo reveal"><div class="stage" id="hbStage"><div class="keys">press 1–9 or scroll here</div><div class="glow" id="glow"></div><div class="hb" id="hb"><span>⚔</span><span>⛏</span><span>🪓</span><span>🍖</span><span>🧱</span><span>🔦</span><span>🪣</span><span>🏹</span><span>🛡</span></div></div>
+      <div class="txt"><h3>🎯 Hotbar polish</h3><p>The golden glow slides smoothly between slots.</p></div></div>
+    <div class="demo reveal"><div class="stage" id="doorStage"><div class="keys">click the doors</div><div class="doors" id="doors"><div class="door"></div><div class="door"></div></div></div>
+      <div class="txt"><h3>🚪 Double doors</h3><p>One click opens both sides.</p></div></div>
+    <div class="demo reveal"><div class="stage" id="hudStage"><div class="info" id="info"><b>XYZ</b> <span>-212 64 1088</span><br><b>Facing</b> <span>North</span><br><b>Biome</b> <span>Cherry Grove</span><br><b>Time</b> <span id="clock">09:41</span> <span style="color:#ff5">☀</span><br><b>FPS</b> <span>144</span></div>
+      <div class="toast" id="toast"><i>⚠</i>Diamond Pickaxe is almost broken<br><small>14 uses left</small></div><div class="keys" style="top:auto;bottom:12px">press J • click for a toast</div></div>
+      <div class="txt"><h3>📍 Info HUD & toasts</h3><p>Toggle the info panel with J. Notifications slide in from the corner.</p></div></div>
+    <div class="demo reveal"><div class="stage death"><div class="dt">You Died!</div><div class="panel">You died at <b>-212 58 1104</b><br>in <b>Overworld</b> • level <span style="color:#5f5">27</span><br><span style="color:#777">Your items are waiting there</span></div><div class="copy" id="copy">📍 Copy death coordinates</div></div>
+      <div class="txt"><h3>☠ Better death screen</h3><p>Never lose your stuff again.</p></div></div>
+    <div class="demo reveal" style="grid-column:1/-1"><div class="stage" style="height:180px;background:linear-gradient(90deg,#0f2316,#13261d,#1a1830)"><div class="wave" id="wave"></div>
+      <div class="sndbtns"><button data-s="birds" class="on">🐦 Birds</button><button data-s="crickets">🦗 Crickets</button><button data-s="wind">🌬 Wind</button><button data-s="drip">💧 Cave drips</button><button data-s="creak">🪜 Ladder</button><button data-s="wet">👣 Wet steps</button></div></div>
+      <div class="txt"><h3>🔊 New ambient sounds</h3><p>Click a sound to hear a preview, made in your browser like the sounds in the mod.</p></div></div>
+  </div>
+</div></section>
+
+<section id="controls"><div class="wrap cfg">
+  <div><span class="eyebrow reveal">Controls & config</span><h2 class="reveal">Make it yours</h2>
+    <p class="lead reveal" style="margin-bottom:20px">Every feature can be switched off in <code>config/vanillarefined.json</code>.</p>
+    <div class="keyrow reveal"><span class="kbd">J</span> Toggle the info HUD</div>
+    <div class="keyrow reveal"><span class="kbd">⇧</span> Sneak to open just one door, or to skip harvesting</div>
+    <div class="keyrow reveal"><span class="kbd">RMB</span> Harvest ripe crops and replant automatically</div>
+  </div>
+  <pre class="reveal">{
+  <span class="k">"animatedContainers"</span>: <span class="v">true</span>,
+  <span class="k">"doubleDoors"</span>: <span class="v">true</span>,
+  <span class="k">"flickeringLights"</span>: <span class="v">true</span>,
+  <span class="k">"ambientSounds"</span>: <span class="v">true</span>,
+  <span class="k">"ambientVolume"</span>: <span class="v">0.6</span>,
+  <span class="k">"wetFootsteps"</span>: <span class="v">true</span>,
+  <span class="k">"rightClickHarvest"</span>: <span class="v">true</span>,
+  <span class="k">"animalsEatDroppedFood"</span>: <span class="v">true</span>,
+  <span class="k">"hotbarPolish"</span>: <span class="v">true</span>,
+  <span class="k">"infoHud"</span>: <span class="v">true</span>,
+  <span class="k">"betterDeathScreen"</span>: <span class="v">true</span>,
+  <span class="k">"…"</span>: <span class="v">22 toggles in total</span>
+}</pre>
+</div></section>
+
+<section id="download"><div class="wrap"><div class="dlbox reveal">
+  <div class="ver">Version 1.0.0 • Minecraft 26.2+ • Fabric</div>
+  <h2>Get Vanilla Refined</h2>
+  <p style="color:var(--mute)">Free. Works in singleplayer, LAN and on servers.</p>
+  <div class="btns" style="margin-top:28px"><a class="btn main" href="VanillaRefined-1.0.0-fabric-26.2.jar" download>⬇ Download for Fabric</a></div>
+  <div class="steps">
+    <div class="step"><b>1 • Install</b><p>Fabric Loader 0.19+ and Fabric API for Minecraft 26.2.</p></div>
+    <div class="step"><b>2 • Drop it in</b><p>Put the jar in <code>.minecraft/mods</code>.</p></div>
+    <div class="step"><b>3 • Play</b><p>Start the game. Press <code>J</code> for the info HUD.</p></div>
+  </div>
+</div></div></section>
+
+<section id="faq" style="padding-top:20px"><div class="wrap">
+  <div class="center"><span class="eyebrow reveal">FAQ</span><h2 class="reveal">Questions</h2></div>
+  <div class="faq">
+    <details class="reveal"><summary>Does it add new blocks or items?</summary><p>No. Vanilla Refined only polishes what's already in the game, so worlds stay 100% vanilla-compatible.</p></details>
+    <details class="reveal"><summary>Does it work on servers?</summary><p>Yes. Visuals, sounds and the HUD work for you anywhere. Gameplay features like double doors, right-click harvest and animals eating dropped food need the mod on the server too (in singleplayer and LAN that's automatic).</p></details>
+    <details class="reveal"><summary>Will it slow my game down?</summary><p>No. The effects reuse Minecraft's own particles and only run near you. You can turn anything off in the config.</p></details>
+    <details class="reveal"><summary>Is there a Forge version?</summary><p>Not yet. Version 1.0 is Fabric only.</p></details>
+    <details class="reveal"><summary>What's Vanilla Refined+?</summary><p>A bigger follow-up with even more polish. It's coming later. Vanilla Refined stays the light, pure-vanilla one.</p></details>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><div>Vanilla Refined by <b style="color:var(--text)">v1sion</b></div><div>Not affiliated with Mojang or Microsoft.</div></div></footer>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* fireflies + falling leaves */
+(() => {
+  const c = document.getElementById('fx'), x = c.getContext('2d'); let W, H, items = [];
+  const rs = () => { const d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; c.width = W * d; c.height = H * d; x.setTransform(d, 0, 0, d, 0, 0); };
+  rs(); addEventListener('resize', rs);
+  const N = reduce ? 0 : Math.min(60, innerWidth / 22 | 0);
+  for (let i = 0; i < N; i++) items.push({x: Math.random() * W, y: Math.random() * H, leaf: i % 3 === 0, s: 2 + Math.random() * 3, vx: (Math.random() - .5) * .3, vy: .2 + Math.random() * .5, p: Math.random() * 6.28, r: Math.random() * 6.28});
+  const tick = () => {
+    x.clearRect(0, 0, W, H);
+    for (const f of items) {
+      f.p += .03; f.r += .02;
+      if (f.leaf) { f.x += f.vx + Math.sin(f.p) * .5; f.y += f.vy; if (f.y > H + 20) { f.y = -20; f.x = Math.random() * W; } }
+      else { f.x += Math.sin(f.p * .7) * .4; f.y += Math.cos(f.p * .5) * .3; if (f.y < -10) f.y = H; if (f.y > H + 10) f.y = 0; }
+      x.save(); x.translate(f.x, f.y);
+      if (f.leaf) { x.rotate(f.r); x.scale(Math.cos(f.r * 2), 1); x.fillStyle = 'rgba(124,201,80,.55)'; x.fillRect(-f.s * 1.4, -f.s, f.s * 2.8, f.s * 2); x.fillStyle = 'rgba(166,227,107,.6)'; x.fillRect(-f.s * .7, -f.s * .5, f.s * 1.4, f.s); }
+      else { const a = .35 + Math.sin(f.p * 2) * .35; const g = x.createRadialGradient(0, 0, 0, 0, 0, f.s * 4); g.addColorStop(0, `rgba(255,236,140,${a})`); g.addColorStop(1, 'rgba(255,236,140,0)'); x.fillStyle = g; x.beginPath(); x.arc(0, 0, f.s * 4, 0, 6.28); x.fill(); }
+      x.restore();
+    }
+    requestAnimationFrame(tick);
+  };
+  if (N) tick();
+})();
+/* reveal, progress, nav */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .1});
+document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 5) * 60 + 'ms'; io.observe(el); });
+const prog = document.getElementById('prog'), links = [...document.querySelectorAll('.links a')];
+addEventListener('scroll', () => {
+  prog.style.width = scrollY / (document.body.scrollHeight - innerHeight) * 100 + '%';
+  let cur = ''; document.querySelectorAll('section[id]').forEach(s => { if (scrollY + 140 >= s.offsetTop) cur = s.id; });
+  links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+}, {passive: true});
+/* counters */
+const cio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const el = e.target, to = +el.dataset.count; let t0; const st = ts => { t0 ??= ts; const k = Math.min(1, (ts - t0) / 1100); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(st); }; requestAnimationFrame(st); cio.unobserve(el); }), {threshold: .6});
+document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+/* tilt + spotlight */
+const tilt = document.getElementById('tilt');
+if (!reduce && matchMedia('(hover:hover)').matches) {
+  tilt.parentElement.addEventListener('mousemove', e => { const r = tilt.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height; tilt.style.transform = `rotateY(${(px - .5) * 9}deg) rotateX(${(.5 - py) * 7}deg)`; tilt.style.setProperty('--gx', px * 100 + '%'); tilt.style.setProperty('--gy', py * 100 + '%'); });
+  tilt.parentElement.addEventListener('mouseleave', () => tilt.style.transform = '');
+}
+document.querySelectorAll('.card').forEach(c => c.addEventListener('mousemove', e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', e.clientX - r.left + 'px'); c.style.setProperty('--my', e.clientY - r.top + 'px'); }));
+/* category filter */
+document.querySelectorAll('.cat').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.cat').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('#grid .card').forEach(c => c.classList.toggle('hide', b.dataset.c !== 'all' && c.dataset.c !== b.dataset.c));
+}));
+/* torch demo */
+const ts = document.getElementById('torchStage');
+ts.addEventListener('mouseenter', () => ts.classList.add('lean')); ts.addEventListener('mouseleave', () => ts.classList.remove('lean'));
+/* wheat demo */
+(() => {
+  const st = document.getElementById('wheatStage'), crops = [];
+  for (let i = 0; i < 9; i++) { const w = document.createElement('div'); w.className = 'wheat'; w.style.left = 14 + i * 10.5 + '%'; w.style.animationDelay = -i * .3 + 's'; w.dataset.ripe = '1'; st.appendChild(w); crops.push(w);
+    w.addEventListener('click', () => { if (w.dataset.ripe !== '1') return; w.dataset.ripe = '0'; w.style.height = '10px'; w.style.background = 'linear-gradient(#7cc950,#4f8a2a)';
+      for (let k = 0; k < 6; k++) spark(w.offsetLeft + 6, st.clientHeight - 70, '#a6e36b'); setTimeout(() => { w.style.height = '46px'; w.style.background = ''; w.dataset.ripe = '1'; }, 2400); }); }
+  function spark(x, y, col) { const s = document.createElement('div'); s.className = 'spark'; s.style.left = x + (Math.random() - .5) * 20 + 'px'; s.style.top = y + (Math.random() - .5) * 16 + 'px'; if (col) { s.style.background = col; s.style.boxShadow = '0 0 8px ' + col; } st.appendChild(s); setTimeout(() => s.remove(), 1600); }
+  setInterval(() => { const w = crops[Math.random() * crops.length | 0]; if (w.dataset.ripe === '1') spark(w.offsetLeft + 6, st.clientHeight - 60 - Math.random() * 30); }, 260);
+})();
+/* hotbar demo */
+(() => {
+  const st = document.getElementById('hbStage'), glow = document.getElementById('glow'), hb = document.getElementById('hb'); let sel = 0;
+  const place = () => { const s = hb.children[sel], r = s.getBoundingClientRect(), pr = st.getBoundingClientRect(); glow.style.left = (r.left - pr.left - 2) + 'px'; };
+  addEventListener('resize', place); setTimeout(place, 300);
+  addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '9') { sel = +e.key - 1; place(); } });
+  st.addEventListener('wheel', e => { e.preventDefault(); sel = (sel + (e.deltaY > 0 ? 1 : 8)) % 9; place(); }, {passive: false});
+  [...hb.children].forEach((s, i) => s.addEventListener('click', () => { sel = i; place(); }));
+  new IntersectionObserver(es => { if (es[0].isIntersecting) place(); }).observe(st);
+})();
+/* door demo */
+document.getElementById('doorStage').addEventListener('click', () => document.getElementById('doors').classList.toggle('open'));
+/* info + toast demo */
+(() => {
+  const info = document.getElementById('info'), toast = document.getElementById('toast'), clock = document.getElementById('clock'); let m = 9 * 60 + 41;
+  addEventListener('keydown', e => { if (e.key.toLowerCase() === 'j') info.classList.toggle('off'); });
+  document.getElementById('hudStage').addEventListener('click', () => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2600); });
+  setInterval(() => { m = (m + 1) % 1440; clock.textContent = String(m / 60 | 0).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }, 700);
+})();
+/* death copy */
+document.getElementById('copy').addEventListener('click', e => { navigator.clipboard?.writeText('-212 58 1104'); e.target.textContent = '✔ Copied -212 58 1104'; setTimeout(() => e.target.textContent = '📍 Copy death coordinates', 1800); });
+/* sound previews (web audio, synthesized the same way as the mod's sounds) */
+(() => {
+  const wave = document.getElementById('wave'); for (let i = 0; i < 48; i++) { const b = document.createElement('i'); b.style.height = 10 + Math.random() * 50 + 'px'; b.style.animationDelay = -Math.random() + 's'; b.style.animationPlayState = 'paused'; wave.appendChild(b); }
+  let ctx;
+  const play = kind => {
+    ctx ??= new (window.AudioContext || window.webkitAudioContext)(); const t = ctx.currentTime, out = ctx.createGain(); out.gain.value = .25; out.connect(ctx.destination);
+    const tone = (f0, f1, start, dur, type = 'sine', vol = .5) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t + start); o.frequency.exponentialRampToValueAtTime(f1, t + start + dur); g.gain.setValueAtTime(0, t + start); g.gain.linearRampToValueAtTime(vol, t + start + .01); g.gain.exponentialRampToValueAtTime(.001, t + start + dur); o.connect(g); g.connect(out); o.start(t + start); o.stop(t + start + dur + .05); };
+    const noise = (dur, lp, hp, vol = .6) => { const b = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; const s = ctx.createBufferSource(); s.buffer = b; const f1 = ctx.createBiquadFilter(); f1.type = 'lowpass'; f1.frequency.value = lp; const f2 = ctx.createBiquadFilter(); f2.type = 'highpass'; f2.frequency.value = hp; const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + dur * .3); g.gain.linearRampToValueAtTime(0, t + dur); s.connect(f1); f1.connect(f2); f2.connect(g); g.connect(out); s.start(t); };
+    if (kind === 'birds') for (let i = 0; i < 6; i++) tone(2600 + Math.random() * 900, 4000 + Math.random() * 600, i * .16 + (i > 2 ? .5 : 0), .08);
+    if (kind === 'crickets') for (let i = 0; i < 18; i++) tone(4500, 4500, (i % 3) * .04 + (i / 3 | 0) * .45, .03, 'sine', .25);
+    if (kind === 'wind') noise(3, 600, 80, .9);
+    if (kind === 'drip') { tone(1800, 900, 0, .12); tone(1800, 900, .2, .12, 'sine', .2); tone(1800, 900, .45, .12, 'sine', .08); }
+    if (kind === 'creak') tone(130, 90, 0, .45, 'sawtooth', .2);
+    if (kind === 'wet') for (let i = 0; i < 4; i++) setTimeout(() => noise(.12, 6000, 1200, .5), i * 330);
+    wave.querySelectorAll('i').forEach(b => b.style.animationPlayState = 'running');
+    setTimeout(() => wave.querySelectorAll('i').forEach(b => b.style.animationPlayState = 'paused'), 2500);
+  };
+  document.querySelectorAll('.sndbtns button').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('.sndbtns button').forEach(x => x.classList.toggle('on', x === b)); play(b.dataset.s); }));
+})();
+</script>
+</body>
+</html>
