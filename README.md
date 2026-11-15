@@ -5,8 +5,8 @@
 Website: https://v1sion0coder.github.io/vanilla-refined/
 
 - Animated containers, double doors, falling block dust, flickering lights
-- Item frame effects, cold breath, ladder creak
-- 17 new ambient sounds (birds, crickets, wind, cave drips) and wet footsteps
+- Item frame effects, cold breath
+- New ambient sounds: birds, crickets, wind, cave drips
 - Mob death effects and villager emotes
 - Right-click harvest, crop sparkle, bone meal pop, animals eat dropped food
 - Hotbar polish, info HUD (press J), armor durability, smart toasts, better death screen

@@ -192,9 +192,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   </div></div>
   <p class="caption reveal">A real in-game screenshot with Vanilla Refined installed.</p>
   <div class="stats">
-    <div class="stat reveal"><b data-count="20">0</b><span>refinements</span></div>
-    <div class="stat reveal"><b data-count="17">0</b><span>new ambient sounds</span></div>
-    <div class="stat reveal"><b data-count="22">0</b><span>config toggles</span></div>
+    <div class="stat reveal"><b data-count="17">0</b><span>refinements</span></div>
+    <div class="stat reveal"><b data-count="12">0</b><span>new ambient sounds</span></div>
+    <div class="stat reveal"><b data-count="20">0</b><span>config toggles</span></div>
     <div class="stat reveal"><b data-count="0">0</b><span>new blocks or items</span></div>
   </div>
 </div></header>
@@ -213,9 +213,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div class="card reveal" data-c="world"><div class="ico">🕯</div><h3>Flickering lights</h3><p>Torches, lanterns and candles flicker softly, and the flame leans away when you walk past.</p><span class="badge">World & blocks</span></div>
     <div class="card reveal" data-c="world"><div class="ico">🖼</div><h3>Item frames</h3><p>Rotating an item sparkles, and glow item frames pulse with a soft glow.</p><span class="badge">Items</span></div>
     <div class="card reveal" data-c="world"><div class="ico">❄</div><h3>Cold breath</h3><p>In snowy biomes every player breathes out little white clouds.</p><span class="badge">Player feel</span></div>
-    <div class="card reveal" data-c="sound"><div class="ico">🪜</div><h3>Ladder creak</h3><p>Ladders creak gently under you as you climb.</p><span class="badge">Player feel</span></div>
-    <div class="card reveal" data-c="sound"><div class="ico">🐦</div><h3>Ambient sounds</h3><p>Birds sing near trees by day, crickets chirp at night, wind howls up high and water drips with an echo in caves. All 17 sounds are new.</p><span class="badge">Sound</span></div>
-    <div class="card reveal" data-c="sound"><div class="ico">💧</div><h3>Wet footsteps</h3><p>After a swim you leave splashy, dripping footsteps for a while, for every player.</p><span class="badge">Sound</span></div>
+    <div class="card reveal" data-c="sound"><div class="ico">🐦</div><h3>Ambient sounds</h3><p>Birds sing near trees by day, crickets chirp at night, wind howls up high and water drips with an echo in caves. All 12 sounds are new.</p><span class="badge">Sound</span></div>
     <div class="card reveal" data-c="mobs"><div class="ico">👻</div><h3>Death effects</h3><p>When a mob dies, its soul drifts up while the body crumbles into dust.</p><span class="badge">Mobs</span></div>
     <div class="card reveal" data-c="mobs"><div class="ico">💬</div><h3>Villager emotes</h3><p>Villagers react to you: hearts when you hold emeralds, notes when they're happy, anger when they're hurt.</p><span class="badge">Mobs</span></div>
     <div class="card reveal" data-c="farm"><div class="ico">🌾</div><h3>Right-click harvest</h3><p>Right-click ripe crops to harvest and replant in one go. Works on wheat, carrots, potatoes, beetroot and nether wart.</p><span class="badge">Farming</span></div>
@@ -247,7 +245,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div class="demo reveal"><div class="stage death"><div class="dt">You Died!</div><div class="panel">You died at <b>-212 58 1104</b><br>in <b>Overworld</b> • level <span style="color:#5f5">27</span><br><span style="color:#777">Your items are waiting there</span></div><div class="copy" id="copy">📍 Copy death coordinates</div></div>
       <div class="txt"><h3>☠ Better death screen</h3><p>Never lose your stuff again.</p></div></div>
     <div class="demo reveal" style="grid-column:1/-1"><div class="stage" style="height:180px;background:linear-gradient(90deg,#0f2316,#13261d,#1a1830)"><div class="wave" id="wave"></div>
-      <div class="sndbtns"><button data-s="birds" class="on">🐦 Birds</button><button data-s="crickets">🦗 Crickets</button><button data-s="wind">🌬 Wind</button><button data-s="drip">💧 Cave drips</button><button data-s="creak">🪜 Ladder</button><button data-s="wet">👣 Wet steps</button></div></div>
+      <div class="sndbtns"><button data-s="birds" class="on">🐦 Birds</button><button data-s="crickets">🦗 Crickets</button><button data-s="wind">🌬 Wind</button><button data-s="drip">💧 Cave drips</button></div></div>
       <div class="txt"><h3>🔊 New ambient sounds</h3><p>Click a sound to hear a preview, made in your browser like the sounds in the mod.</p></div></div>
   </div>
 </div></section>
@@ -265,13 +263,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <span class="k">"flickeringLights"</span>: <span class="v">true</span>,
   <span class="k">"ambientSounds"</span>: <span class="v">true</span>,
   <span class="k">"ambientVolume"</span>: <span class="v">0.6</span>,
-  <span class="k">"wetFootsteps"</span>: <span class="v">true</span>,
   <span class="k">"rightClickHarvest"</span>: <span class="v">true</span>,
   <span class="k">"animalsEatDroppedFood"</span>: <span class="v">true</span>,
   <span class="k">"hotbarPolish"</span>: <span class="v">true</span>,
   <span class="k">"infoHud"</span>: <span class="v">true</span>,
   <span class="k">"betterDeathScreen"</span>: <span class="v">true</span>,
-  <span class="k">"…"</span>: <span class="v">22 toggles in total</span>
+  <span class="k">"…"</span>: <span class="v">20 toggles in total</span>
 }</pre>
 </div></section>
 
@@ -394,8 +391,6 @@ document.getElementById('copy').addEventListener('click', e => { navigator.clipb
     if (kind === 'crickets') for (let i = 0; i < 18; i++) tone(4500, 4500, (i % 3) * .04 + (i / 3 | 0) * .45, .03, 'sine', .25);
     if (kind === 'wind') noise(3, 600, 80, .9);
     if (kind === 'drip') { tone(1800, 900, 0, .12); tone(1800, 900, .2, .12, 'sine', .2); tone(1800, 900, .45, .12, 'sine', .08); }
-    if (kind === 'creak') tone(130, 90, 0, .45, 'sawtooth', .2);
-    if (kind === 'wet') for (let i = 0; i < 4; i++) setTimeout(() => noise(.12, 6000, 1200, .5), i * 330);
     wave.querySelectorAll('i').forEach(b => b.style.animationPlayState = 'running');
     setTimeout(() => wave.querySelectorAll('i').forEach(b => b.style.animationPlayState = 'paused'), 2500);
   };
